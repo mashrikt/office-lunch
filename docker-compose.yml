@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+    db:
+
+services:
+  db:
+    image: postgres:14.0
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=office-lunch
+      - POSTGRES_PASSWORD=office-lunch
+      - POSTGRES_DB=office-lunch
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U office-lunch"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  web:
+    restart: always
+    environment:
+      - SECRET_KEY=local
+      - DEBUG=True
+      - DATABASE_URL=postgres://office-lunch:office-lunch@db:5432/office-lunch
+    build: ./
+    command: >
+      bash -c "./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
