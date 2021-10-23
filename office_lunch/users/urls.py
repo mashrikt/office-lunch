@@ -7,6 +7,6 @@ auth_urlpatterns = [
 ]
 
 users_urlpatterns = [
-    path('', UserListCreateAPIView.as_view(), name='list_create_users'),
-    path('<int:pk>/', UserRetrieveUpdateAPIView.as_view(), name='retrieve_update_user'),
+    path('', UserListCreateAPIView.as_view(), name='list_create'),
+    path('<int:pk>/', UserRetrieveUpdateAPIView.as_view(), name='retrieve_update'),
 ]
