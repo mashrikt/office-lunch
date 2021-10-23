@@ -43,8 +43,10 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'dj_rest_auth',
+    'django_filters',
 
     'office_lunch.users',
+    'office_lunch.restaurants',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +132,12 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ]
 }
 
 REST_USE_JWT = True

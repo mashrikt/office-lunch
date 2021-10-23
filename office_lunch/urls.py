@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from office_lunch.users.urls import auth_urlpatterns, users_urlpatterns
+from .restaurants.urls import restaurant_urlpatterns, menu_urlpatterns
+from .users.urls import auth_urlpatterns, users_urlpatterns
 
 api_patterns = [
     path('auth/', include(arg=(auth_urlpatterns, 'auth'), namespace='auth')),
     path('users/', include(arg=(users_urlpatterns, 'users'), namespace='users')),
+    path('restaurants/', include(arg=(restaurant_urlpatterns, 'restaurants'), namespace='restaurants')),
+    path('menus/', include(arg=(menu_urlpatterns, 'menus'), namespace='menus')),
 ]
 
 
