@@ -1,6 +1,7 @@
 import pytest
 from rest_framework.test import APIClient
 
+from .restaurants.tests.factories import RestaurantFactory, MenuFactory
 from .users.tests.factories import UserFactory
 
 
@@ -34,3 +35,13 @@ def auth_client(user, client):
 def staff_auth_client(staff_user, client):
     client.force_authenticate(staff_user)
     return client
+
+
+@pytest.fixture
+def restaurant():
+    return RestaurantFactory()
+
+
+@pytest.fixture
+def menu():
+    return MenuFactory()
