@@ -7,6 +7,7 @@ from .serializers import RestaurantSerializer, MenuSerializer
 
 
 class RestaurantListCreateAPIView(ListCreateAPIView):
+    permission_classes = [IsAdminUser]
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
