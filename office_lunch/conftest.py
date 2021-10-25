@@ -3,6 +3,7 @@ from rest_framework.test import APIClient
 
 from .restaurants.tests.factories import RestaurantFactory, MenuFactory
 from .users.tests.factories import UserFactory
+from .votes.tests.factories import VoteFactory, WinnerFactory
 
 
 @pytest.fixture(autouse=True)
@@ -45,3 +46,13 @@ def restaurant():
 @pytest.fixture
 def menu():
     return MenuFactory()
+
+
+@pytest.fixture
+def vote():
+    return VoteFactory()
+
+
+@pytest.fixture
+def winner():
+    return WinnerFactory()
