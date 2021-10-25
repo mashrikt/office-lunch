@@ -66,9 +66,8 @@ class TestCreateMenu:
         menu_exists = Menu.objects.filter(date=menu_data['date'], restaurant=menu_data['restaurant']).exists()
         assert menu_exists is False
 
-    def test_staff_user_can_create_user(self, url, staff_auth_client, menu_data):
+    def test_staff_user_can_create_menu(self, url, staff_auth_client, menu_data):
         response = staff_auth_client.post(url, data=menu_data)
-        print("\n\n\n\n\n", menu_data)
         assert response.status_code == 201
         menu_exists = Menu.objects.filter(date=menu_data['date'], restaurant=menu_data['restaurant']).exists()
         assert menu_exists is True
