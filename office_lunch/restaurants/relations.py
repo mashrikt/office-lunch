@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from django.utils.module_loading import import_string
 from rest_framework.relations import (
-    PrimaryKeyRelatedField, SlugRelatedField, MANY_RELATION_KWARGS,
+    PrimaryKeyRelatedField, MANY_RELATION_KWARGS,
     ManyRelatedField as DRFManyRelatedField
 )
 

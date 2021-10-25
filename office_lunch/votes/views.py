@@ -1,5 +1,6 @@
-from django.utils import timezone
-from rest_framework.generics import CreateAPIView, ListCreateAPIView
+from datetime import datetime
+
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Vote, Winner
@@ -27,4 +28,4 @@ class WinnerListCreateAPIView(ListCreateAPIView):
     filter_fields = ('date',)
 
     def perform_create(self, instance):
-        instance.save(date=timezone.now().date())
+        instance.save(date=datetime.today().date())
