@@ -18,12 +18,15 @@ from django.urls import path, include
 
 from .restaurants.urls import restaurant_urlpatterns, menu_urlpatterns
 from .users.urls import auth_urlpatterns, users_urlpatterns
+from .votes.urls import vote_urlpatterns, winner_urlpatterns
 
 api_patterns = [
     path('auth/', include(arg=(auth_urlpatterns, 'auth'), namespace='auth')),
     path('users/', include(arg=(users_urlpatterns, 'users'), namespace='users')),
     path('restaurants/', include(arg=(restaurant_urlpatterns, 'restaurants'), namespace='restaurants')),
     path('menus/', include(arg=(menu_urlpatterns, 'menus'), namespace='menus')),
+    path('votes/', include(arg=(vote_urlpatterns, 'votes'), namespace='votes')),
+    path('winners/', include(arg=(winner_urlpatterns, 'winners'), namespace='winners')),
 ]
 
 

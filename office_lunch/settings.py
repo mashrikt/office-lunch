@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'office_lunch.users',
     'office_lunch.restaurants',
+    'office_lunch.votes',
 ]
 
 MIDDLEWARE = [
