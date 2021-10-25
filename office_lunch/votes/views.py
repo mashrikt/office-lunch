@@ -16,7 +16,7 @@ class VoteCreateAPIView(CreateAPIView):
         serializer.save(user=self.request.user)
 
 
-class ListCreateWinnerAPIView(ListCreateAPIView):
+class WinnerListCreateAPIView(ListCreateAPIView):
     permission_classes = [IsAdminUserOrReadOnly]
     queryset = Winner.objects.all()
     serializer_class = WinnerSerializer
