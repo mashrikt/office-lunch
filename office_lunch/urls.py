@@ -19,7 +19,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from .restaurants.urls import restaurant_urlpatterns, menu_urlpatterns
-from .users.urls import auth_urlpatterns, users_urlpatterns
+from .users.urls import auth_urlpatterns, user_urlpatterns
 from .votes.urls import vote_urlpatterns, winner_urlpatterns
 
 
@@ -34,7 +34,7 @@ schema_view = get_schema_view(
 
 api_patterns = [
     path('auth/', include(arg=(auth_urlpatterns, 'auth'), namespace='auth')),
-    path('users/', include(arg=(users_urlpatterns, 'users'), namespace='users')),
+    path('users/', include(arg=(user_urlpatterns, 'users'), namespace='users')),
     path('restaurants/', include(arg=(restaurant_urlpatterns, 'restaurants'), namespace='restaurants')),
     path('menus/', include(arg=(menu_urlpatterns, 'menus'), namespace='menus')),
     path('votes/', include(arg=(vote_urlpatterns, 'votes'), namespace='votes')),
