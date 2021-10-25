@@ -7,10 +7,14 @@ from .serializers import VoteSerializer, WinnerSerializer
 from ..restaurants.permissions import IsAdminUserOrReadOnly
 
 
-class VoteCreateAPIView(CreateAPIView):
+class VoteCreateAPIView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    filter_fields = ('menu__date',)
+
+    def get_queryset(self):
+        return Vote.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

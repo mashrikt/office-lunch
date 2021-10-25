@@ -5,10 +5,16 @@ from rest_framework import serializers
 
 from .models import Vote, Winner
 from .utils import get_last_n_working_days
+from ..restaurants.models import Menu
+from ..restaurants.relations import PresentablePrimaryKeyRelatedField
 from ..restaurants.serializers import MenuSerializer
 
 
 class VoteSerializer(serializers.ModelSerializer):
+    menu = PresentablePrimaryKeyRelatedField(
+        queryset=Menu.objects.all(),
+        presentation_serializer=MenuSerializer
+    )
 
     class Meta:
         model = Vote

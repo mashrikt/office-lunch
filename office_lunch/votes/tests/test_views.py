@@ -50,6 +50,33 @@ class TestCreateVote:
         assert vote_exists is False
 
 
+class TestListVote:
+
+    @pytest.fixture
+    def url(self):
+        return reverse('api:votes:create')
+
+    def test_user_see_their_vote(self, url, auth_client, user):
+        vote = VoteFactory(user=user)
+        response = auth_client.get(url)
+        assert response.status_code == 200
+        assert len(response.json()) == 1
+        assert response.json()[0]['menu']['id'] == vote.menu.id
+
+    def test_returns_empty_when_user_hasnt_voted(self, url, auth_client):
+        response = auth_client.get(url)
+        assert response.status_code == 200
+        assert response.json() == []
+
+    def test_user_cant_see_anothers_votes(self, url, auth_client, vote):
+        today = datetime.today().date()
+        vote_exists = Vote.objects.filter(menu__date=today).exists()
+        response = auth_client.get(url)
+        assert vote_exists is True
+        assert response.status_code == 200
+        assert response.json() == []
+
+
 class TestCreateWinner:
 
     @pytest.fixture
