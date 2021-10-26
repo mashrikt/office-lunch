@@ -1,6 +1,6 @@
 # Office Lunch API
 
-> Helps Offices To Decide Their Lunch Menu!
+> Helps Offices Decide Their Lunch Menu!
 
 Office Lunch has two types of users, regular and admin users. Admin users can add restaurants and daily menus. Users 
 can then vote for their favorite menu of the day. Admin users can then generate the winning menu. 
@@ -32,14 +32,14 @@ $ docker-compose exec web bash
 ```
 
 ## API Structure
-`api/auth`: authentication endpoints
-`api/users`: admin only endpoint for creating updating and deleting users
-`api/restauramts`: admin only endpoint for creating updating and deleting restaurants
-`api/menus`:  admins create menus and users can see list of menus
-`api/votes`: endpoint for users to list and create their votes
-`api/winners`: admin only endpoint to generate the winner for the day.
-`docs`: Documentation
-`admin`: Django admin panel
+- `api/auth`: authentication endpoints
+- `api/users`: admin only endpoint for creating updating and deleting users
+- `api/restauramts`: admin only endpoint for creating updating and deleting restaurants
+- `api/menus`:  admins create menus and users can see list of menus
+- `api/votes`: endpoint for users to list and create their votes
+- `api/winners`: admin only endpoint to generate the winner for the day.
+- `docs`: documentation
+- `admin`: admin panel
 
 ## Improvements
 - More test coverage (currently only test cases added for critical behavior)
