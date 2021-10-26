@@ -15,14 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from .restaurants.urls import restaurant_urlpatterns, menu_urlpatterns
-from .users.urls import auth_urlpatterns, users_urlpatterns
+from .users.urls import auth_urlpatterns, user_urlpatterns
 from .votes.urls import vote_urlpatterns, winner_urlpatterns
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title='Office Lunch API',
+      default_version='v1',
+      description='Helps Office Decide Their Office Lunch Menu!',
+   ),
+   public=True,
+)
 
 api_patterns = [
     path('auth/', include(arg=(auth_urlpatterns, 'auth'), namespace='auth')),
-    path('users/', include(arg=(users_urlpatterns, 'users'), namespace='users')),
+    path('users/', include(arg=(user_urlpatterns, 'users'), namespace='users')),
     path('restaurants/', include(arg=(restaurant_urlpatterns, 'restaurants'), namespace='restaurants')),
     path('menus/', include(arg=(menu_urlpatterns, 'menus'), namespace='menus')),
     path('votes/', include(arg=(vote_urlpatterns, 'votes'), namespace='votes')),
@@ -32,5 +44,6 @@ api_patterns = [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api/', include(arg=(api_patterns, 'api_patterns'), namespace='api')),
 ]

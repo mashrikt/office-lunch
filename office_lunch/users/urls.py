@@ -6,7 +6,7 @@ auth_urlpatterns = [
     path('', include('dj_rest_auth.urls')),
 ]
 
-users_urlpatterns = [
+user_urlpatterns = [
     path('', UserListCreateAPIView.as_view(), name='list_create'),
     path('<int:pk>/', UserRetrieveUpdateAPIView.as_view(), name='retrieve_update'),
 ]

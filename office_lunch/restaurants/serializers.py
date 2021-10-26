@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Restaurant, Menu
+from .relations import PresentablePrimaryKeyRelatedField
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -11,6 +12,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class MenuSerializer(serializers.ModelSerializer):
+
+    restaurant = PresentablePrimaryKeyRelatedField(
+        queryset=Restaurant.objects.all(),
+        presentation_serializer=RestaurantSerializer
+    )
 
     class Meta:
         model = Menu

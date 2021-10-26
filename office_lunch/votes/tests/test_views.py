@@ -49,6 +49,50 @@ class TestCreateVote:
         vote_exists = Vote.objects.filter(menu=winner.menu, user=user).exists()
         assert vote_exists is False
 
+    def test_user_cannot_vote_for_twice_recurring_winner(self, url, auth_client, user, restaurant):
+        second_last_day = get_last_n_working_days(2)[0]
+        second_last_day_menu = MenuFactory(restaurant=restaurant, date=second_last_day)
+        WinnerFactory(menu=second_last_day_menu, date=second_last_day)
+
+        last_day = get_last_n_working_days(1)[0]
+        last_day_menu = MenuFactory(restaurant=restaurant, date=last_day)
+        WinnerFactory(menu=last_day_menu, date=last_day)
+
+        today_menu = MenuFactory(restaurant=restaurant)
+        data = {'menu': today_menu.id}
+        response = auth_client.post(url, data=data)
+        assert response.status_code == 400
+        error_msg = 'This restaurant won on last 2 days. Cannot vote for this restaurant!'
+        assert response.json()['non_field_errors'] == [error_msg]
+
+
+
+class TestListVote:
+
+    @pytest.fixture
+    def url(self):
+        return reverse('api:votes:create')
+
+    def test_user_see_their_vote(self, url, auth_client, user):
+        vote = VoteFactory(user=user)
+        response = auth_client.get(url)
+        assert response.status_code == 200
+        assert len(response.json()) == 1
+        assert response.json()[0]['menu']['id'] == vote.menu.id
+
+    def test_returns_empty_when_user_hasnt_voted(self, url, auth_client):
+        response = auth_client.get(url)
+        assert response.status_code == 200
+        assert response.json() == []
+
+    def test_user_cant_see_anothers_votes(self, url, auth_client, vote):
+        today = datetime.today().date()
+        vote_exists = Vote.objects.filter(menu__date=today).exists()
+        response = auth_client.get(url)
+        assert vote_exists is True
+        assert response.status_code == 200
+        assert response.json() == []
+
 
 class TestCreateWinner:
 

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_rest_auth',
     'django_filters',
+    'drf_yasg',
 
     'office_lunch.users',
     'office_lunch.restaurants',

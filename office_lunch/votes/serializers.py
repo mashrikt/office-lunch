@@ -5,10 +5,16 @@ from rest_framework import serializers
 
 from .models import Vote, Winner
 from .utils import get_last_n_working_days
+from ..restaurants.models import Menu
+from ..restaurants.relations import PresentablePrimaryKeyRelatedField
 from ..restaurants.serializers import MenuSerializer
 
 
 class VoteSerializer(serializers.ModelSerializer):
+    menu = PresentablePrimaryKeyRelatedField(
+        queryset=Menu.objects.all(),
+        presentation_serializer=MenuSerializer
+    )
 
     class Meta:
         model = Vote
@@ -17,14 +23,24 @@ class VoteSerializer(serializers.ModelSerializer):
     def validate(self, data):
         user = self.context['request'].user
         menu = data['menu']
-        already_voted = Vote.objects.filter(user=user, menu__date=menu.date)
-        voting_concluded = Winner.objects.filter(menu__date=datetime.today().date())
+
         if menu.date < datetime.today().date():
             raise serializers.ValidationError('User cannot vote for past dates!')
+
+        already_voted = Vote.objects.filter(user=user, menu__date=menu.date)
         if already_voted:
             raise serializers.ValidationError('User has already voted!')
+
+        voting_concluded = Winner.objects.filter(menu__date=datetime.today().date())
         if voting_concluded:
             raise serializers.ValidationError('Voting concluded for the day!')
+
+        recurring_wins = Winner.objects.filter(
+            menu__restaurant=menu.restaurant,
+            date__in=get_last_n_working_days(2)
+        ).count()
+        if recurring_wins == 2:
+            raise serializers.ValidationError('This restaurant won on last 2 days. Cannot vote for this restaurant!')
         return data
 
 
