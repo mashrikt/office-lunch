@@ -22,7 +22,7 @@ class VoteCreateAPIView(ListCreateAPIView):
 
 
 class WinnerListCreateAPIView(ListCreateAPIView):
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAdminUserOrReadOnly]
     queryset = Winner.objects.all()
     serializer_class = WinnerSerializer
     filter_fields = ('date',)

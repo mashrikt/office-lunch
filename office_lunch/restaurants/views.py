@@ -1,5 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from .models import Restaurant, Menu
 from .permissions import IsAdminUserOrReadOnly
@@ -19,13 +19,13 @@ class RestaurantRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
 
 class MenuListCreateAPIView(ListCreateAPIView):
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAdminUserOrReadOnly]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
     filter_fields = ('date', 'restaurant')
 
 
 class MenuRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsAuthenticated, IsAdminUserOrReadOnly]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
