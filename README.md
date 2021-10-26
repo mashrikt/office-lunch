@@ -16,7 +16,7 @@ can then vote for their favorite menu of the day. Admin users can then generate 
 ## Local Development
 Start the dev server for local development:
 ```shell script
-$ docker-compose up
+$ docker-compose up --build
 ```
 
 Run the tests
