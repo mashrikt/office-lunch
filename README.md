@@ -34,7 +34,7 @@ $ docker-compose exec web bash
 ## API Structure
 - `api/auth`: authentication endpoints
 - `api/users`: admin only endpoint for creating updating and deleting users
-- `api/restauramts`: admin only endpoint for creating updating and deleting restaurants
+- `api/restaurants`: admin only endpoint for creating updating and deleting restaurants
 - `api/menus`:  admins create menus and users can see list of menus
 - `api/votes`: endpoint for users to list and create their votes
 - `api/winners`: admin only endpoint to generate the winner for the day.
